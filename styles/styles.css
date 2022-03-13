@@ -3,3 +3,54 @@
   margin: 0;
   box-sizing: border-box;
 }
+
+html,
+body {
+  height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.board-container {
+  display: flex;
+  justify-content: center;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 5px;
+  padding: 10px;
+}
+
+.square {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid black;
+  min-width: 65px;
+  min-height: 65px;
+  border-radius: 10px;
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.keyboard-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  touch-action: manipulation;
+}
+
+.keyboard-row button {
+  font-weight: bold;
+  margin: 0.1rem;
+  padding: 0;
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+}
