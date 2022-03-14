@@ -1,14 +1,13 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import GameContainer from "../components/GameContainer";
+import Header from "../components/Header";
 import Keyboard from "../components/Keyboard";
 
 const HomePage = () => {
   return (
     <div id="container">
+      <Header />
       <div id="game">
-        <header>
-          <h1 class="title">WORDLE</h1>
-        </header>
         <GameContainer />
         <Keyboard />
       </div>
