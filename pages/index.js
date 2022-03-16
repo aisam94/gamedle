@@ -11,14 +11,12 @@ const HomePage = () => {
   const [currentGuess, setCurrentGuess] = useState("");
   const [isGameOver, setGameOver] = useState(false);
 
-  const [usedLetters, setUsedLetters] = useState([]);
-  const [yellowLetters, setYellowLetters] = useState([]);
-  const [correctLetters, setCorrectLetters] = useState([]);
-  // const [letterStatus, setLetterStatus] = useState({
-  //   usedLetters: [],
-  //   yellowLetters: [],
-  //   correctLetters: [],
-  // });
+  const [letterStatus, setLetterStatus] = useState({
+    usedLetters: [],
+    misplacedLetters: [],
+    correctLetters: [],
+  });
+  const { usedLetters, misplacedLetters, correctLetters } = letterStatus;
 
   const squares = [];
   for (let i = 0; i < MAX_TRIES; i++) {
@@ -63,21 +61,27 @@ const HomePage = () => {
         if (currentGuess[i] === answer[i]) {
           guesses[currentRow][i].color = "green";
           correctLetters.push(guesses[currentRow][i].value);
-          setCorrectLetters(correctLetters);
+          setLetterStatus({
+            ...letterStatus,
+            correctLetters: correctLetters,
+          });
         } else if (answer.includes(currentGuess[i])) {
           guesses[currentRow][i].color = "yellow";
-          yellowLetters.push(guesses[currentRow][i].value);
-          setYellowLetters(yellowLetters);
+          misplacedLetters.push(guesses[currentRow][i].value);
+          setLetterStatus({
+            ...letterStatus,
+            misplacedLetters: misplacedLetters,
+          });
         } else {
           guesses[currentRow][i].color = "gray";
           usedLetters.push(guesses[currentRow][i].value);
-          setUsedLetters(usedLetters);
+          setLetterStatus({ ...letterStatus, usedLetters: usedLetters });
         }
       }
       setGuesses(guesses);
       //
       triesLeft--;
-      setCurrentGuess(""); //
+      setCurrentGuess("");
       if (isWinningWord(currentGuess)) {
         setGameOver(true);
         console.log("YOU WIN");
@@ -120,7 +124,7 @@ const HomePage = () => {
   useEffect(() => {
     if (!isGameOver) {
       changeGuess(currentGuess);
-      console.log({ usedLetters, yellowLetters, correctLetters });
+      console.log({ letterStatus });
     }
   }, [currentGuess]);
 
@@ -139,9 +143,7 @@ const HomePage = () => {
           onChar={onChar}
           onEnter={onEnter}
           onDelete={onDelete}
-          usedLetters={usedLetters}
-          yellowLetters={yellowLetters}
-          correctLetters={correctLetters}
+          letterStatus={letterStatus}
         />
       </div>
     </div>

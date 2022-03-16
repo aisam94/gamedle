@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const Keyboard = ({
-  onChar,
-  onEnter,
-  onDelete,
-  usedLetters,
-  yellowLetters,
-  correctLetters,
-}) => {
+const Keyboard = ({ onChar, onEnter, onDelete, letterStatus }) => {
   const handleClick = (e) => {
     if (e.target.value === "Enter") {
       onEnter();
@@ -24,11 +17,11 @@ const Keyboard = ({
         {["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"].map((key) => {
           //set up the color of the keyboard buttons
           const color = "";
-          if (correctLetters.includes(key)) {
+          if (letterStatus.correctLetters.includes(key)) {
             color = "green";
-          } else if (yellowLetters.includes(key)) {
+          } else if (letterStatus.misplacedLetters.includes(key)) {
             color = "yellow";
-          } else if (usedLetters.includes(key)) {
+          } else if (letterStatus.usedLetters.includes(key)) {
             color = "gray";
           }
           return (
@@ -47,11 +40,11 @@ const Keyboard = ({
         {["A", "S", "D", "F", "G", "H", "J", "K", "L"].map((key) => {
           //set up the color of the keyboard buttons
           const color = "";
-          if (correctLetters.includes(key)) {
+          if (letterStatus.correctLetters.includes(key)) {
             color = "green";
-          } else if (yellowLetters.includes(key)) {
+          } else if (letterStatus.misplacedLetters.includes(key)) {
             color = "yellow";
-          } else if (usedLetters.includes(key)) {
+          } else if (letterStatus.usedLetters.includes(key)) {
             color = "gray";
           }
           return (
@@ -77,11 +70,11 @@ const Keyboard = ({
         {["Z", "X", "C", "V", "B", "N", "M"].map((key) => {
           //set up the color of the keyboard buttons
           const color = "";
-          if (correctLetters.includes(key)) {
+          if (letterStatus.correctLetters.includes(key)) {
             color = "green";
-          } else if (yellowLetters.includes(key)) {
+          } else if (letterStatus.misplacedLetters.includes(key)) {
             color = "yellow";
-          } else if (usedLetters.includes(key)) {
+          } else if (letterStatus.usedLetters.includes(key)) {
             color = "gray";
           }
           return (

@@ -38,10 +38,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid var(--black);
+  border: 1px solid var(--gray);
+  border-radius: 10px;
   min-width: 65px;
   min-height: 65px;
-  border-radius: 10px;
   font-size: 3rem;
   font-weight: bold;
 }
@@ -67,11 +67,11 @@ body {
   height: 50px;
   width: 50px;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.1s ease-in-out;
 }
 
 .key-btn:hover {
-  transform: scale(1.2);
+  transform: scale(1.4);
 }
 
 .long-key-btn {
