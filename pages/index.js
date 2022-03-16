@@ -11,6 +11,15 @@ const HomePage = () => {
   const [currentGuess, setCurrentGuess] = useState("");
   const [isGameOver, setGameOver] = useState(false);
 
+  const [usedLetters, setUsedLetters] = useState([]);
+  const [yellowLetters, setYellowLetters] = useState([]);
+  const [correctLetters, setCorrectLetters] = useState([]);
+  // const [letterStatus, setLetterStatus] = useState({
+  //   usedLetters: [],
+  //   yellowLetters: [],
+  //   correctLetters: [],
+  // });
+
   const squares = [];
   for (let i = 0; i < MAX_TRIES; i++) {
     squares.push([]);
@@ -53,10 +62,16 @@ const HomePage = () => {
       for (let i = 0; i < MAX_WORD_LENGTH; i++) {
         if (currentGuess[i] === answer[i]) {
           guesses[currentRow][i].color = "green";
+          correctLetters.push(guesses[currentRow][i].value);
+          setCorrectLetters(correctLetters);
         } else if (answer.includes(currentGuess[i])) {
           guesses[currentRow][i].color = "yellow";
+          yellowLetters.push(guesses[currentRow][i].value);
+          setYellowLetters(yellowLetters);
         } else {
           guesses[currentRow][i].color = "gray";
+          usedLetters.push(guesses[currentRow][i].value);
+          setUsedLetters(usedLetters);
         }
       }
       setGuesses(guesses);
@@ -105,7 +120,7 @@ const HomePage = () => {
   useEffect(() => {
     if (!isGameOver) {
       changeGuess(currentGuess);
-      console.log({ currentGuess, guesses, answer });
+      console.log({ usedLetters, yellowLetters, correctLetters });
     }
   }, [currentGuess]);
 
@@ -120,7 +135,14 @@ const HomePage = () => {
       <Header />
       <div id="game">
         <Grid guesses={guesses} />
-        <Keyboard onChar={onChar} />
+        <Keyboard
+          onChar={onChar}
+          onEnter={onEnter}
+          onDelete={onDelete}
+          usedLetters={usedLetters}
+          yellowLetters={yellowLetters}
+          correctLetters={correctLetters}
+        />
       </div>
     </div>
   );

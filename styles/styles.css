@@ -5,6 +5,7 @@
   --white: #ffffff;
   --black: #121212;
 }
+
 * {
   padding: 0;
   margin: 0;
@@ -37,22 +38,12 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid black;
+  border: 2px solid var(--black);
   min-width: 65px;
   min-height: 65px;
   border-radius: 10px;
   font-size: 3rem;
   font-weight: bold;
-}
-
-.square-gray {
-  background-color: var(--gray);
-}
-.square-yellow {
-  background-color: var(--yellow);
-}
-.square-green {
-  background-color: var(--green);
 }
 
 .keyboard-container {
@@ -67,11 +58,33 @@ body {
   touch-action: manipulation;
 }
 
-.keyboard-row button {
+.key-btn {
+  border: 1px solid var(--gray);
+  border-radius: 4px;
   font-weight: bold;
   margin: 0.1rem;
   padding: 0;
   height: 50px;
   width: 50px;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.key-btn:hover {
+  transform: scale(1.2);
+}
+
+.long-key-btn {
+  width: 70px;
+}
+
+.green {
+  background-color: var(--green);
+}
+.yellow {
+  background-color: var(--yellow);
+}
+
+.gray {
+  background-color: var(--gray);
 }
