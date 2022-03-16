@@ -9,6 +9,7 @@ let triesLeft = MAX_TRIES;
 
 const HomePage = () => {
   const [currentGuess, setCurrentGuess] = useState("");
+  const [isGameOver, setGameOver] = useState(false);
 
   const squares = [];
   for (let i = 0; i < MAX_TRIES; i++) {
@@ -34,7 +35,7 @@ const HomePage = () => {
 
   const onChar = (text) => {
     const newText = `${currentGuess}${text}`;
-    if (newText.length <= MAX_WORD_LENGTH && triesLeft > 0) {
+    if (newText.length <= MAX_WORD_LENGTH && !isGameOver) {
       setCurrentGuess(newText);
     }
   };
@@ -63,10 +64,12 @@ const HomePage = () => {
       triesLeft--;
       setCurrentGuess(""); //
       if (isWinningWord(currentGuess)) {
+        setGameOver(true);
         console.log("YOU WIN");
         return;
       }
       if (!triesLeft) {
+        setGameOver(true);
         console.log("YOU LOSE, GOOD DAY SIR!");
         return;
       }
@@ -80,14 +83,16 @@ const HomePage = () => {
 
   useEffect(() => {
     const listener = (e) => {
-      if (e.code === "Enter" && triesLeft) {
-        onEnter();
-      } else if (e.code === "Backspace" && triesLeft) {
-        onDelete();
-      } else {
-        const key = e.key.toUpperCase();
-        if (key.length === 1 && key >= "A" && key <= "Z") {
-          onChar(key);
+      if (!isGameOver) {
+        if (e.code === "Enter") {
+          onEnter();
+        } else if (e.code === "Backspace") {
+          onDelete();
+        } else {
+          const key = e.key.toUpperCase();
+          if (key.length === 1 && key >= "A" && key <= "Z") {
+            onChar(key);
+          }
         }
       }
     };
@@ -98,7 +103,7 @@ const HomePage = () => {
   }, [onEnter, onDelete, onChar]);
 
   useEffect(() => {
-    if (triesLeft) {
+    if (!isGameOver) {
       changeGuess(currentGuess);
       console.log({ currentGuess, guesses, answer });
     }

@@ -1,3 +1,10 @@
+:root {
+  --green: #6aaa64;
+  --yellow: #c9b458;
+  --gray: #787c7e;
+  --white: #ffffff;
+  --black: #121212;
+}
 * {
   padding: 0;
   margin: 0;
@@ -36,6 +43,16 @@ body {
   border-radius: 10px;
   font-size: 3rem;
   font-weight: bold;
+}
+
+.square-gray {
+  background-color: var(--gray);
+}
+.square-yellow {
+  background-color: var(--yellow);
+}
+.square-green {
+  background-color: var(--green);
 }
 
 .keyboard-container {
