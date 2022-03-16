@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import GameContainer from "../components/GameContainer";
 import Header from "../components/Header";
+import Grid from "../components/Grid";
 import Keyboard from "../components/Keyboard";
 import { MAX_WORD_LENGTH, MAX_TRIES } from "../constants/settings";
 import { answer, isWinningWord, isWordInList } from "../lib/words";
@@ -12,21 +12,24 @@ const HomePage = () => {
 
   const squares = [];
   for (let i = 0; i < MAX_TRIES; i++) {
+    squares.push([]);
     for (let x = 0; x < MAX_WORD_LENGTH; x++) {
-      squares.push("");
+      squares[i].push({ color: "", value: "" });
     }
   }
   const [guesses, setGuesses] = useState(squares);
 
-  const changeGuess = (text, triesLeft) => {
-    const num = (MAX_TRIES - triesLeft) * MAX_WORD_LENGTH;
-    for (let i = 0; i < MAX_WORD_LENGTH; i++) {
-      guesses[i + num] = "";
+  const changeGuess = (text) => {
+    const currentRow = MAX_TRIES - triesLeft;
+    if (triesLeft) {
+      for (let i = 0; i < MAX_WORD_LENGTH; i++) {
+        guesses[currentRow][i].value = "";
+      }
+      for (let i = 0; i < text.length; i++) {
+        guesses[currentRow][i].value = text[i];
+      }
+      setGuesses(guesses);
     }
-    for (let i = 0; i < text.length; i++) {
-      guesses[i + num] = text[i];
-    }
-    setGuesses(guesses);
   };
 
   const onChar = (text) => {
@@ -42,27 +45,36 @@ const HomePage = () => {
   };
 
   const onEnter = () => {
-    //if not enough letters
-    //if win
-    //if wrong word
-    //if lose game
-    //if not proper word
+    const currentRow = MAX_TRIES - triesLeft;
     if (currentGuess.length === MAX_WORD_LENGTH && isWordInList(currentGuess)) {
+      //valid guess
+      //fill color array
+      for (let i = 0; i < MAX_WORD_LENGTH; i++) {
+        if (currentGuess[i] === answer[i]) {
+          guesses[currentRow][i].color = "green";
+        } else if (answer.includes(currentGuess[i])) {
+          guesses[currentRow][i].color = "yellow";
+        } else {
+          guesses[currentRow][i].color = "gray";
+        }
+      }
+      setGuesses(guesses);
+      //
       triesLeft--;
-      setCurrentGuess("");
+      setCurrentGuess(""); //
       if (isWinningWord(currentGuess)) {
         console.log("YOU WIN");
         return;
       }
       if (!triesLeft) {
-        console.log("You lose, good day sir!");
+        console.log("YOU LOSE, GOOD DAY SIR!");
         return;
       }
-      console.log("Wrong word");
+      console.log("WRONG WORD");
     } else if (currentGuess.length < MAX_WORD_LENGTH) {
-      console.log("not enough letter");
+      console.log("NOT ENOUGH LETTER");
     } else if (!isWordInList(currentGuess)) {
-      console.log("Not a proper word");
+      console.log("NOT A PROPER WORD");
     }
   };
 
@@ -86,15 +98,23 @@ const HomePage = () => {
   }, [onEnter, onDelete, onChar]);
 
   useEffect(() => {
-    changeGuess(currentGuess, triesLeft);
-    console.log({ currentGuess, guesses, answer });
+    if (triesLeft) {
+      changeGuess(currentGuess);
+      console.log({ currentGuess, guesses, answer });
+    }
+  }, [currentGuess]);
+
+  //makeshift rerender
+  const [rerender, setRerender] = useState(false);
+  useEffect(() => {
+    setRerender(!rerender);
   }, [currentGuess]);
 
   return (
     <div id="container">
       <Header />
       <div id="game">
-        <GameContainer guesses={guesses} />
+        <Grid guesses={guesses} />
         <Keyboard onChar={onChar} />
       </div>
     </div>
