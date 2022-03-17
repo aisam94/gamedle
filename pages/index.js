@@ -10,13 +10,16 @@ let triesLeft = MAX_TRIES;
 const HomePage = () => {
   const [currentGuess, setCurrentGuess] = useState("");
   const [isGameOver, setGameOver] = useState(false);
-
   const [letterStatus, setLetterStatus] = useState({
     usedLetters: [],
     misplacedLetters: [],
     correctLetters: [],
   });
   const { usedLetters, misplacedLetters, correctLetters } = letterStatus;
+  const [rowClass, setRowClass] = useState("");
+
+  let currentRow = MAX_TRIES - triesLeft;
+  let currentSquare = currentGuess.length - 1;
 
   const squares = [];
   for (let i = 0; i < MAX_TRIES; i++) {
@@ -81,6 +84,7 @@ const HomePage = () => {
       setGuesses(guesses);
       //
       triesLeft--;
+      setRowClass("");
       setCurrentGuess("");
       if (isWinningWord(currentGuess)) {
         setGameOver(true);
@@ -94,9 +98,11 @@ const HomePage = () => {
       }
       console.log("WRONG WORD");
     } else if (currentGuess.length < MAX_WORD_LENGTH) {
+      setRowClass("shake-x");
       console.log("NOT ENOUGH LETTER");
     } else if (!isWordInList(currentGuess)) {
       console.log("NOT A PROPER WORD");
+      setRowClass("shake-x");
     }
   };
 
@@ -124,13 +130,14 @@ const HomePage = () => {
   useEffect(() => {
     if (!isGameOver) {
       changeGuess(currentGuess);
-      console.log({ letterStatus });
+      console.log({ letterStatus, rowClass });
     }
   }, [currentGuess]);
 
   //makeshift rerender
   const [rerender, setRerender] = useState(false);
   useEffect(() => {
+    setRowClass("");
     setRerender(!rerender);
   }, [currentGuess]);
 
@@ -138,7 +145,12 @@ const HomePage = () => {
     <div id="container">
       <Header />
       <div id="game">
-        <Grid guesses={guesses} />
+        <Grid
+          guesses={guesses}
+          currentRow={currentRow}
+          currentSquare={currentSquare}
+          rowClass={rowClass}
+        />
         <Keyboard
           onChar={onChar}
           onEnter={onEnter}
