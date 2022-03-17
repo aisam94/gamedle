@@ -4,6 +4,7 @@ import Grid from "../components/Grid";
 import Keyboard from "../components/Keyboard";
 import { MAX_WORD_LENGTH, MAX_TRIES } from "../constants/settings";
 import { answer, isWinningWord, isWordInList } from "../lib/words";
+import Alert from "../components/Alert";
 
 let triesLeft = MAX_TRIES;
 
@@ -17,6 +18,7 @@ const HomePage = () => {
   });
   const { usedLetters, misplacedLetters, correctLetters } = letterStatus;
   const [rowClass, setRowClass] = useState("");
+  const [alertMessage, setAlertMessage] = useState("");
 
   let currentRow = MAX_TRIES - triesLeft;
   let currentSquare = currentGuess.length - 1;
@@ -88,20 +90,20 @@ const HomePage = () => {
       setCurrentGuess("");
       if (isWinningWord(currentGuess)) {
         setGameOver(true);
-        console.log("YOU WIN");
+        setAlertMessage("You Win !!!");
         return;
       }
       if (!triesLeft) {
         setGameOver(true);
-        console.log("YOU LOSE, GOOD DAY SIR!");
+        setAlertMessage("You lose, Good day Sir !!!");
         return;
       }
-      console.log("WRONG WORD");
+      setAlertMessage("Try again");
     } else if (currentGuess.length < MAX_WORD_LENGTH) {
       setRowClass("shake-x");
-      console.log("NOT ENOUGH LETTER");
+      setAlertMessage("Not Enough Letters");
     } else if (!isWordInList(currentGuess)) {
-      console.log("NOT A PROPER WORD");
+      setAlertMessage("Word not in our list");
       setRowClass("shake-x");
     }
   };
@@ -130,7 +132,7 @@ const HomePage = () => {
   useEffect(() => {
     if (!isGameOver) {
       changeGuess(currentGuess);
-      // console.log({ letterStatus });
+      //console.log({currentGuess})
     }
   }, [currentGuess]);
 
@@ -144,6 +146,7 @@ const HomePage = () => {
   return (
     <div id="container">
       <Header />
+      <Alert alertMessage={alertMessage} />
       <div id="game">
         <Grid
           guesses={guesses}
