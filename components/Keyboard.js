@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 const Keyboard = ({ onChar, onEnter, onDelete, letterStatus }) => {
+  const [keyPressed, setKeyPressed] = useState("");
   const handleClick = (e) => {
     if (e.target.value === "Enter") {
       onEnter();
@@ -10,6 +11,21 @@ const Keyboard = ({ onChar, onEnter, onDelete, letterStatus }) => {
       onChar(e.target.value);
     }
   };
+
+  useEffect(() => {
+    const listener = (e) => {
+      if (e.code === "Enter" || e.code === "Backspace") {
+        setKeyPressed(e.code);
+      } else {
+        const key = e.key.toUpperCase();
+        setKeyPressed(key);
+      }
+    };
+    window.addEventListener("keyup", listener);
+    return () => {
+      window.removeEventListener("keyup", listener);
+    };
+  }, [keyPressed]);
 
   return (
     <div className="keyboard-container">
@@ -26,7 +42,9 @@ const Keyboard = ({ onChar, onEnter, onDelete, letterStatus }) => {
           }
           return (
             <button
-              className={`key-btn ${color}`}
+              className={`key-btn ${color} ${
+                keyPressed === key ? "keycap-pop" : ""
+              }   `}
               value={key}
               key={key}
               onClick={handleClick}
@@ -49,7 +67,9 @@ const Keyboard = ({ onChar, onEnter, onDelete, letterStatus }) => {
           }
           return (
             <button
-              className={`key-btn ${color}`}
+              className={`key-btn ${color}  ${
+                keyPressed === key ? "keycap-pop" : ""
+              }        `}
               value={key}
               key={key}
               onClick={handleClick}
@@ -61,7 +81,9 @@ const Keyboard = ({ onChar, onEnter, onDelete, letterStatus }) => {
       </div>
       <div className="keyboard-row">
         <button
-          className="key-btn long-key-btn"
+          className={`key-btn long-key-btn ${
+            keyPressed === "Enter" ? "keycap-pop" : ""
+          }`}
           value="Enter"
           onClick={handleClick}
         >
@@ -79,7 +101,9 @@ const Keyboard = ({ onChar, onEnter, onDelete, letterStatus }) => {
           }
           return (
             <button
-              className={`key-btn ${color}`}
+              className={`key-btn ${color} ${
+                keyPressed === key ? "keycap-pop" : ""
+              }`}
               value={key}
               key={key}
               onClick={handleClick}
@@ -89,7 +113,9 @@ const Keyboard = ({ onChar, onEnter, onDelete, letterStatus }) => {
           );
         })}
         <button
-          className="key-btn long-key-btn"
+          className={`key-btn long-key-btn ${
+            keyPressed === "Backspace" ? "keycap-pop" : ""
+          }`}
           value="Delete"
           onClick={handleClick}
         >

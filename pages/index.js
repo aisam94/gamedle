@@ -130,7 +130,7 @@ const HomePage = () => {
   useEffect(() => {
     if (!isGameOver) {
       changeGuess(currentGuess);
-      console.log({ letterStatus, rowClass });
+      // console.log({ letterStatus });
     }
   }, [currentGuess]);
 
