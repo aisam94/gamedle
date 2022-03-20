@@ -95,7 +95,7 @@ const HomePage = () => {
       }
       if (!triesLeft) {
         setGameOver(true);
-        setAlertMessage("You lose, Good day Sir !!!");
+        setAlertMessage(`You lose, Good day Sir !!! The word is ${answer}`);
         return;
       }
       setAlertMessage("Try again");
