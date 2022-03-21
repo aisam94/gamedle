@@ -12,7 +12,7 @@ const Row = ({ row, className, currentSquare }) => {
                 value={square.value}
                 color={square.color}
                 key={index}
-                squareClass="cell-fill-animation"
+                squareClass={`cell-fill-animation`}
               />
             );
           }

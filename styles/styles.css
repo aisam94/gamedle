@@ -172,6 +172,24 @@ header {
   }
 }
 
+.dancing-up {
+  animation: dancing-up ease-in 0.5s infinite;
+}
+
+@keyframes dancing-up {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
 .cell-reveal {
   animation-duration: 0.3s;
   animation-timing-function: linear;

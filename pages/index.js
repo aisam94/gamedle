@@ -20,7 +20,9 @@ const HomePage = () => {
   const [rowClass, setRowClass] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
 
-  let currentRow = MAX_TRIES - triesLeft;
+  let currentRow = isGameOver
+    ? MAX_TRIES - triesLeft - 1
+    : MAX_TRIES - triesLeft;
   let currentSquare = currentGuess.length - 1;
 
   const squares = [];
@@ -90,6 +92,7 @@ const HomePage = () => {
       setCurrentGuess("");
       if (isWinningWord(currentGuess)) {
         setGameOver(true);
+        setRowClass("dancing-up");
         setAlertMessage("You Win !!!");
         return;
       }
@@ -132,7 +135,7 @@ const HomePage = () => {
   useEffect(() => {
     if (!isGameOver) {
       changeGuess(currentGuess);
-      //console.log({currentGuess})
+      console.log({ answer });
     }
   }, [currentGuess]);
 
