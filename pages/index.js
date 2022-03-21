@@ -134,10 +134,6 @@ const HomePage = () => {
   useEffect(() => {
     if (!isGameOver) {
       changeGuess(currentGuess);
-<<<<<<< HEAD
-      console.log({ answer });
-=======
->>>>>>> main
     }
   }, [currentGuess]);
 
