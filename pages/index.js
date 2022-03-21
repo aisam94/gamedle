@@ -92,20 +92,20 @@ const HomePage = () => {
       if (isWinningWord(currentGuess)) {
         setGameOver(true);
         setRowClass("dancing-up");
-        setAlertMessage("You Win !!!");
+        setAlertMessage("YOU WIN !!!");
         return;
       }
       if (!triesLeft) {
         setGameOver(true);
-        setAlertMessage(`You lose, Good day Sir !!! The word is ${answer}`);
+        setAlertMessage(`YOU LOSE, GOOD DAY SIR !THE WORD IS ${answer}`);
         return;
       }
-      setAlertMessage("Try again");
+      setAlertMessage("TRY AGAIN ...");
     } else if (currentGuess.length < MAX_WORD_LENGTH) {
       setRowClass("shake-x");
-      setAlertMessage("Not Enough Letters");
+      setAlertMessage("NOT ENOUGH LETTERS");
     } else if (!isWordInList(currentGuess)) {
-      setAlertMessage("Word not in our list");
+      setAlertMessage("WORD IS NOT IN OUR LIST");
       setRowClass("shake-x");
     }
   };
@@ -141,9 +141,11 @@ const HomePage = () => {
   //rerender using timeout after jiggle
   useEffect(() => {
     setRerender(!rerender);
-    const timer = setTimeout(() => {
-      setRowClass("");
-    }, 500);
+    if (!isGameOver) {
+      const timer = setTimeout(() => {
+        setRowClass("");
+      }, 500);
+    }
 
     return () => clearTimeout(timer);
   }, [rowClass, currentGuess]);
