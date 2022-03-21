@@ -19,6 +19,7 @@ const HomePage = () => {
   const { usedLetters, misplacedLetters, correctLetters } = letterStatus;
   const [rowClass, setRowClass] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
+  const [rerender, setRerender] = useState(false);
 
   let currentRow = isGameOver
     ? MAX_TRIES - triesLeft - 1
@@ -63,7 +64,6 @@ const HomePage = () => {
     const currentRow = MAX_TRIES - triesLeft;
     if (currentGuess.length === MAX_WORD_LENGTH && isWordInList(currentGuess)) {
       //valid guess
-      //fill color array
       for (let i = 0; i < MAX_WORD_LENGTH; i++) {
         if (currentGuess[i] === answer[i]) {
           guesses[currentRow][i].color = "green";
@@ -88,7 +88,6 @@ const HomePage = () => {
       setGuesses(guesses);
       //
       triesLeft--;
-      setRowClass("");
       setCurrentGuess("");
       if (isWinningWord(currentGuess)) {
         setGameOver(true);
@@ -98,7 +97,7 @@ const HomePage = () => {
       }
       if (!triesLeft) {
         setGameOver(true);
-        setAlertMessage("You lose, Good day Sir !!!");
+        setAlertMessage(`You lose, Good day Sir !!! The word is ${answer}`);
         return;
       }
       setAlertMessage("Try again");
@@ -135,16 +134,23 @@ const HomePage = () => {
   useEffect(() => {
     if (!isGameOver) {
       changeGuess(currentGuess);
+<<<<<<< HEAD
       console.log({ answer });
+=======
+>>>>>>> main
     }
   }, [currentGuess]);
 
   //makeshift rerender
-  const [rerender, setRerender] = useState(false);
+  //rerender using timeout after jiggle
   useEffect(() => {
-    setRowClass("");
     setRerender(!rerender);
-  }, [currentGuess]);
+    const timer = setTimeout(() => {
+      setRowClass("");
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [rowClass, currentGuess]);
 
   return (
     <div id="container">
