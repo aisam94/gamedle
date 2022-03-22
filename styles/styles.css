@@ -27,7 +27,9 @@ header {
 }
 
 .alert {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-weight: bold;
   height: 2rem;
   padding: 0.5rem;
@@ -73,7 +75,6 @@ header {
   border-radius: 4px;
   font-weight: bold;
   margin: 0.1rem;
-  padding: 0;
   height: 50px;
   width: 50px;
   cursor: pointer;
@@ -269,5 +270,39 @@ header {
   }
   100% {
     transform: rotateX(180deg);
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .title {
+    font-size: 30px;
+  }
+
+  .alert {
+    padding: 0;
+  }
+
+  .square {
+    min-height: 55px;
+    min-width: 55px;
+    font-size: 2.8rem;
+  }
+
+  .key-btn {
+    height: 45px;
+    width: 45px;
+  }
+
+  .key-btn:hover {
+    transform: none;
+  }
+
+  .long-key-btn {
+    font-size: 10px;
+    font-weight: bold;
+  }
+
+  .keyboard-container {
+    margin-top: 10px;
   }
 }
