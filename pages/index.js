@@ -64,8 +64,10 @@ const HomePage = () => {
     const currentRow = MAX_TRIES - triesLeft;
     if (currentGuess.length === MAX_WORD_LENGTH && isWordInList(currentGuess)) {
       //valid guess
+      //iterate word and perform checks
       for (let i = 0; i < MAX_WORD_LENGTH; i++) {
         if (currentGuess[i] === answer[i]) {
+          //if correct word
           guesses[currentRow][i].color = "green";
           correctLetters.push(guesses[currentRow][i].value);
           setLetterStatus({
@@ -73,13 +75,27 @@ const HomePage = () => {
             correctLetters: correctLetters,
           });
         } else if (answer.includes(currentGuess[i])) {
-          guesses[currentRow][i].color = "yellow";
-          misplacedLetters.push(guesses[currentRow][i].value);
-          setLetterStatus({
-            ...letterStatus,
-            misplacedLetters: misplacedLetters,
-          });
+          //misplaced words
+          for (let y = 0; y < MAX_WORD_LENGTH; y++) {
+            if (
+              answer[y] === currentGuess[i] &&
+              currentGuess[y] !== answer[y] &&
+              y !== i
+            ) {
+              guesses[currentRow][i].color = "yellow";
+              misplacedLetters.push(guesses[currentRow][i].value);
+              setLetterStatus({
+                ...letterStatus,
+                misplacedLetters: misplacedLetters,
+              });
+              break;
+            }
+            guesses[currentRow][i].color = "gray";
+            usedLetters.push(guesses[currentRow][i].value);
+            setLetterStatus({ ...letterStatus, usedLetters: usedLetters });
+          }
         } else {
+          //else will be wrong and greyed out
           guesses[currentRow][i].color = "gray";
           usedLetters.push(guesses[currentRow][i].value);
           setLetterStatus({ ...letterStatus, usedLetters: usedLetters });
