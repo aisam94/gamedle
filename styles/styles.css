@@ -30,6 +30,10 @@ header {
 
 .theme-btn {
   width: 10rem;
+  background: white;
+  border: 1px solid black;
+  cursor: pointer;
+  font-weight: bold;
 }
 
 .board-container {
@@ -65,7 +69,7 @@ header {
   border-radius: 10px;
   min-width: 55px;
   min-height: 55px;
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: bold;
   margin: 2.5px;
 }
@@ -298,7 +302,7 @@ header {
   .square {
     min-height: 55px;
     min-width: 55px;
-    font-size: 2.8rem;
+    font-size: 2rem;
   }
 
   .key-btn {
