@@ -13,12 +13,23 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
+main {
+  height: 100vh;
+}
+
 header {
-  margin: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  border-bottom: 1px solid white;
 }
 
 .title {
   text-align: center;
+}
+
+.theme-btn {
+  width: 10rem;
 }
 
 .board-container {
@@ -32,6 +43,7 @@ header {
   align-items: center;
   font-weight: bold;
   height: 2rem;
+  margin-top: 0.5rem;
   padding: 0.5rem;
 }
 
@@ -51,8 +63,8 @@ header {
   align-items: center;
   border: 1px solid var(--gray);
   border-radius: 10px;
-  min-width: 65px;
-  min-height: 65px;
+  min-width: 55px;
+  min-height: 55px;
   font-size: 3rem;
   font-weight: bold;
   margin: 2.5px;
@@ -111,6 +123,7 @@ header {
 .green {
   background-color: var(--green);
 }
+
 .yellow {
   background-color: var(--yellow);
 }
