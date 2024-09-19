@@ -64,6 +64,7 @@ const HomePage = () => {
 	};
 
 	const onEnter = () => {
+		let ansCopy = answer; // to check for duplicates letters
 		const currentRow = MAX_TRIES - triesLeft;
 		if (currentGuess.length === MAX_WORD_LENGTH && isWordInList(currentGuess)) {
 			//valid guess
@@ -77,7 +78,8 @@ const HomePage = () => {
 						...letterStatus,
 						correctLetters: correctLetters,
 					});
-				} else if (answer.includes(currentGuess[guessIdx])) {
+					ansCopy = ansCopy.replace(currentGuess[guessIdx], "");
+				} else if (ansCopy.includes(currentGuess[guessIdx])) {
 					//misplaced words
 					for (let ansIdx = 0;ansIdx < MAX_WORD_LENGTH;ansIdx++) {
 						if (
@@ -97,6 +99,7 @@ const HomePage = () => {
 						usedLetters.push(guesses[currentRow][guessIdx].value);
 						setLetterStatus({ ...letterStatus, usedLetters: usedLetters });
 					}
+					ansCopy = ansCopy.replace(currentGuess[guessIdx], "");
 				} else {
 					//else will be wrong and greyed out
 					guesses[currentRow][guessIdx].color = "gray";
