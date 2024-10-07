@@ -20,11 +20,11 @@ const HomePage = () => {
 		correctLetters: [],
 	});
 	const { usedLetters, misplacedLetters, correctLetters } = letterStatus;
-	const [rowClass, setRowClass] = useState("");
+	const [rowStyleClass, setRowStyleClass] = useState("");
 	const [alertMessage, setAlertMessage] = useState("");
 	const [rerender, setRerender] = useState(false);
 
-	let currentRow = isGameOver
+	let currentRowIdx = isGameOver
 		? MAX_TRIES - triesLeft - 1
 		: MAX_TRIES - triesLeft;
 	let currentSquareIdx = currentGuess.length - 1;
@@ -36,26 +36,26 @@ const HomePage = () => {
 			squares[i].push({ color: "", value: "" });
 		}
 	}
-	const [guesses, setGuesses] = useState(squares);
+	const [guessList, setGuessList] = useState(squares);
 
 	const changeGuess = (text) => {
-		const currentRow = MAX_TRIES - triesLeft;
+		const currentRowIdx = MAX_TRIES - triesLeft;
 		if (triesLeft) {
 			for (let i = 0;i < MAX_WORD_LENGTH;i++) {
-				guesses[currentRow][i].value = "";
-				guesses[currentRow][i].color = "";
+				guessList[currentRowIdx][i].value = "";
+				guessList[currentRowIdx][i].color = "";
 			}
 			for (let i = 0;i < text.length;i++) {
-				guesses[currentRow][i].value = text[i];
+				guessList[currentRowIdx][i].value = text[i];
 				if (usedLetters.includes(text[i]) && !misplacedLetters.includes(text[i])) {
-					guesses[currentRow][i].color = "light-gray";
+					guessList[currentRowIdx][i].color = "light-gray";
 				}
 			}
-			setGuesses(guesses);
+			setGuessList(guessList);
 		}
 	};
 
-	const onChar = (text) => {
+	const onCharInput = (text) => {
 		const newText = `${currentGuess}${text}`;
 		if (newText.length <= MAX_WORD_LENGTH && !isGameOver) {
 			setCurrentGuess(newText);
@@ -69,15 +69,15 @@ const HomePage = () => {
 
 	const onEnter = () => {
 		let ansCopy = answer; // to check for duplicates letters
-		const currentRow = MAX_TRIES - triesLeft;
+		const currentRowIdx = MAX_TRIES - triesLeft;
 		if (currentGuess.length === MAX_WORD_LENGTH && isWordInList(currentGuess)) {
 			//valid guess
 			//iterate word and perform checks
 			for (let guessIdx = 0;guessIdx < MAX_WORD_LENGTH;guessIdx++) {
 				if (currentGuess[guessIdx] === answer[guessIdx]) {
 					//if correct word
-					guesses[currentRow][guessIdx].color = "green";
-					correctLetters.push(guesses[currentRow][guessIdx].value);
+					guessList[currentRowIdx][guessIdx].color = "green";
+					correctLetters.push(guessList[currentRowIdx][guessIdx].value);
 					setLetterStatus({
 						...letterStatus,
 						correctLetters: correctLetters,
@@ -91,33 +91,33 @@ const HomePage = () => {
 							currentGuess[ansIdx] !== answer[ansIdx] &&
 							ansIdx !== guessIdx
 						) {
-							guesses[currentRow][guessIdx].color = "yellow";
-							misplacedLetters.push(guesses[currentRow][guessIdx].value);
+							guessList[currentRowIdx][guessIdx].color = "yellow";
+							misplacedLetters.push(guessList[currentRowIdx][guessIdx].value);
 							setLetterStatus({
 								...letterStatus,
 								misplacedLetters: misplacedLetters,
 							});
 							break;
 						}
-						guesses[currentRow][guessIdx].color = "gray";
-						usedLetters.push(guesses[currentRow][guessIdx].value);
+						guessList[currentRowIdx][guessIdx].color = "gray";
+						usedLetters.push(guessList[currentRowIdx][guessIdx].value);
 						setLetterStatus({ ...letterStatus, usedLetters: usedLetters });
 					}
 					ansCopy = ansCopy.replace(currentGuess[guessIdx], "");
 				} else {
 					//else will be wrong and greyed out
-					guesses[currentRow][guessIdx].color = "gray";
-					usedLetters.push(guesses[currentRow][guessIdx].value);
+					guessList[currentRowIdx][guessIdx].color = "gray";
+					usedLetters.push(guessList[currentRowIdx][guessIdx].value);
 					setLetterStatus({ ...letterStatus, usedLetters: usedLetters });
 				}
 			}
-			setGuesses(guesses);
+			setGuessList(guessList);
 			//
 			triesLeft--;
 			setCurrentGuess("");
 			if (isWinningWord(currentGuess)) {
 				setGameOver(true);
-				setRowClass("dancing-up");
+				setRowStyleClass("dancing-up");
 				setAlertMessage("YOU WIN !!!");
 				return;
 			}
@@ -128,11 +128,11 @@ const HomePage = () => {
 			}
 			setAlertMessage("TRY AGAIN ...");
 		} else if (currentGuess.length < MAX_WORD_LENGTH) {
-			setRowClass("shake-x");
+			setRowStyleClass("shake-x");
 			setAlertMessage("NOT ENOUGH LETTERS");
 		} else if (!isWordInList(currentGuess)) {
 			setAlertMessage("WORD IS NOT IN OUR LIST");
-			setRowClass("shake-x");
+			setRowStyleClass("shake-x");
 		}
 	};
 
@@ -146,7 +146,7 @@ const HomePage = () => {
 				} else {
 					const key = e.key.toUpperCase();
 					if (key.length === 1 && key >= "A" && key <= "Z") {
-						onChar(key);
+						onCharInput(key);
 					}
 				}
 			}
@@ -155,7 +155,7 @@ const HomePage = () => {
 		return () => {
 			window.removeEventListener("keyup", listener);
 		};
-	}, [onEnter, onDelete, onChar]);
+	}, [onEnter, onDelete, onCharInput]);
 
 	useEffect(() => {
 		if (!isGameOver) {
@@ -169,12 +169,12 @@ const HomePage = () => {
 		setRerender(!rerender);
 		if (!isGameOver) {
 			const timer = setTimeout(() => {
-				setRowClass("");
+				setRowStyleClass("");
 			}, 500);
 		}
 
 		return () => clearTimeout(timer);
-	}, [rowClass, currentGuess]);
+	}, [rowStyleClass, currentGuess]);
 
 	return (
 		<main id="container" style={theme}>
@@ -182,13 +182,13 @@ const HomePage = () => {
 			<Alert alertMessage={alertMessage} />
 			<div id="game">
 				<Grid
-					guesses={guesses}
-					currentRow={currentRow}
+					guessList={guessList}
+					currentRowIdx={currentRowIdx}
 					currentSquareIdx={currentSquareIdx}
-					rowClass={rowClass}
+					rowStyleClass={rowStyleClass}
 				/>
 				<Keyboard
-					onChar={onChar}
+					onCharInput={onCharInput}
 					onEnter={onEnter}
 					onDelete={onDelete}
 					letterStatus={letterStatus}

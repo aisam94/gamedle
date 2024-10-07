@@ -1,15 +1,15 @@
 import React from "react";
 import Row from "./Row";
 
-const Grid = ({ guesses, currentRow, rowClass, currentSquareIdx }) => {
+const Grid = ({ guessList, currentRowIdx, rowStyleClass, currentSquareIdx }) => {
   return (
     <div className="board-container">
       <div className="board">
-        {guesses.map((row, index) => {
-          if (index === currentRow) {
+        {guessList.map((row, index) => {
+          if (index === currentRowIdx) {
             return (
               <Row
-                className={rowClass}
+                className={rowStyleClass}
                 row={row}
                 key={index}
                 currentSquareIdx={currentSquareIdx}

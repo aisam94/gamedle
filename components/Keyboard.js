@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const Keyboard = ({ onChar, onEnter, onDelete, letterStatus }) => {
+const Keyboard = ({ onCharInput, onEnter, onDelete, letterStatus }) => {
   const [keyPressed, setKeyPressed] = useState("");
   const handleClick = (e) => {
     if (e.target.value === "Enter") {
@@ -8,7 +8,7 @@ const Keyboard = ({ onChar, onEnter, onDelete, letterStatus }) => {
     } else if (e.target.value === "Delete") {
       onDelete();
     } else {
-      onChar(e.target.value);
+      onCharInput(e.target.value);
     }
   };
 
