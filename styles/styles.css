@@ -1,6 +1,7 @@
 :root {
   --green: #6aaa64;
   --yellow: #c9b458;
+  --light-gray: #6082b6;
   --gray: #787c7e;
   --white: #ffffff;
   --black: #121212;
@@ -132,6 +133,10 @@ header {
   background-color: var(--yellow);
 }
 
+.light-gray {
+  background-color: var(--light-gray);
+}
+
 .gray {
   background-color: var(--gray);
 }
@@ -144,6 +149,7 @@ header {
 }
 
 @keyframes shake {
+
   10%,
   90% {
     transform: translate3d(-1px, 0, 0);
@@ -208,12 +214,15 @@ header {
   animation-timing-function: linear;
   animation-fill-mode: backwards;
 }
+
 .cell-reveal.absent {
   animation-name: revealAbsentCharCell;
 }
+
 .cell-reveal.correct {
   animation-name: revealCorrectCharCell;
 }
+
 .cell-reveal.misplaced {
   animation-name: revealMisplacedCharCell;
 }
@@ -225,15 +234,18 @@ header {
     border-color: var(--default-cell-border-color);
     color: var(--default-cell-text-color);
   }
+
   50% {
     background-color: var(--default-cell-bg-color);
     border-color: var(--default-cell-border-color);
     color: var(--default-cell-text-color);
   }
+
   50.1% {
     background-color: var(--absent-cell-bg-color);
     border-color: var(--absent-cell-bg-color);
   }
+
   100% {
     transform: rotateX(180deg);
   }
@@ -246,15 +258,18 @@ header {
     border-color: var(--default-cell-border-color);
     color: var(--default-cell-text-color);
   }
+
   50% {
     background-color: var(--default-cell-bg-color);
     border-color: var(--default-cell-border-color);
     color: var(--default-cell-text-color);
   }
+
   50.1% {
     background-color: var(--correct-cell-bg-color);
     border-color: var(--correct-cell-bg-color);
   }
+
   100% {
     transform: rotateX(180deg);
   }
@@ -267,24 +282,29 @@ header {
     border-color: var(--default-cell-border-color);
     color: var(--default-cell-text-color);
   }
+
   50% {
     background-color: var(--default-cell-bg-color);
     border-color: var(--default-cell-border-color);
     color: var(--default-cell-text-color);
   }
+
   50.1% {
     background-color: var(--present-cell-bg-color);
     border-color: var(--present-cell-bg-color);
   }
+
   100% {
     transform: rotateX(180deg);
   }
 }
+
 /* Additional animation on the child div to avoid letters turning upside down/snapping back to upright visual glitch */
 @keyframes offsetLetterFlip {
   0% {
     transform: rotateX(0deg);
   }
+
   100% {
     transform: rotateX(180deg);
   }
