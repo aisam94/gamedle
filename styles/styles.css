@@ -4,6 +4,7 @@
   --gray: #787c7e;
   --white: #ffffff;
   --black: #121212;
+  --light-gray: #6082b6;
 }
 
 * {
@@ -134,6 +135,11 @@ header {
 
 .gray {
   background-color: var(--gray);
+}
+
+
+.light-gray {
+  background-color: var(--light-gray);
 }
 
 .shake-x {

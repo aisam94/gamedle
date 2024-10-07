@@ -43,9 +43,13 @@ const HomePage = () => {
 		if (triesLeft) {
 			for (let i = 0;i < MAX_WORD_LENGTH;i++) {
 				guesses[currentRow][i].value = "";
+				guesses[currentRow][i].color = "";
 			}
 			for (let i = 0;i < text.length;i++) {
 				guesses[currentRow][i].value = text[i];
+				if (usedLetters.includes(text[i]) && !misplacedLetters.includes(text[i])) {
+					guesses[currentRow][i].color = "light-gray";
+				}
 			}
 			setGuesses(guesses);
 		}
