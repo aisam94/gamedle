@@ -27,7 +27,7 @@ const HomePage = () => {
 	let currentRow = isGameOver
 		? MAX_TRIES - triesLeft - 1
 		: MAX_TRIES - triesLeft;
-	let currentSquareIdx = currentGuess.length - 1;
+	let currentSquare = currentGuess.length - 1;
 
 	const squares = [];
 	for (let i = 0;i < MAX_TRIES;i++) {
@@ -43,13 +43,9 @@ const HomePage = () => {
 		if (triesLeft) {
 			for (let i = 0;i < MAX_WORD_LENGTH;i++) {
 				guesses[currentRow][i].value = "";
-				guesses[currentRow][i].color = "";
 			}
 			for (let i = 0;i < text.length;i++) {
 				guesses[currentRow][i].value = text[i];
-				if (usedLetters.includes(text[i]) && !misplacedLetters.includes(text[i])) {
-					guesses[currentRow][i].color = "light-gray";
-				}
 			}
 			setGuesses(guesses);
 		}
@@ -184,7 +180,7 @@ const HomePage = () => {
 				<Grid
 					guesses={guesses}
 					currentRow={currentRow}
-					currentSquareIdx={currentSquareIdx}
+					currentSquare={currentSquare}
 					rowClass={rowClass}
 				/>
 				<Keyboard
