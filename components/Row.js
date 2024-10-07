@@ -1,12 +1,12 @@
 import React from "react";
 import Square from "./Square";
 
-const Row = ({ row, className, currentSquare }) => {
+const Row = ({ row, className, currentSquareIdx }) => {
   return (
     <div className={`row ${className}`}>
       {row.map((square, index) => {
         {
-          if (index === currentSquare) {
+          if (index === currentSquareIdx) {
             return (
               <Square
                 value={square.value}

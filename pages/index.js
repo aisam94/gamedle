@@ -27,7 +27,7 @@ const HomePage = () => {
 	let currentRow = isGameOver
 		? MAX_TRIES - triesLeft - 1
 		: MAX_TRIES - triesLeft;
-	let currentSquare = currentGuess.length - 1;
+	let currentSquareIdx = currentGuess.length - 1;
 
 	const squares = [];
 	for (let i = 0;i < MAX_TRIES;i++) {
@@ -180,7 +180,7 @@ const HomePage = () => {
 				<Grid
 					guesses={guesses}
 					currentRow={currentRow}
-					currentSquare={currentSquare}
+					currentSquareIdx={currentSquareIdx}
 					rowClass={rowClass}
 				/>
 				<Keyboard

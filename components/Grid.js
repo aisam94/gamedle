@@ -1,7 +1,7 @@
 import React from "react";
 import Row from "./Row";
 
-const Grid = ({ guesses, currentRow, rowClass, currentSquare }) => {
+const Grid = ({ guesses, currentRow, rowClass, currentSquareIdx }) => {
   return (
     <div className="board-container">
       <div className="board">
@@ -12,7 +12,7 @@ const Grid = ({ guesses, currentRow, rowClass, currentSquare }) => {
                 className={rowClass}
                 row={row}
                 key={index}
-                currentSquare={currentSquare}
+                currentSquareIdx={currentSquareIdx}
               />
             );
           }
