@@ -150,6 +150,7 @@ header {
 }
 
 @keyframes shake {
+
   10%,
   90% {
     transform: translate3d(-1px, 0, 0);
@@ -214,12 +215,15 @@ header {
   animation-timing-function: linear;
   animation-fill-mode: backwards;
 }
+
 .cell-reveal.absent {
   animation-name: revealAbsentCharCell;
 }
+
 .cell-reveal.correct {
   animation-name: revealCorrectCharCell;
 }
+
 .cell-reveal.misplaced {
   animation-name: revealMisplacedCharCell;
 }
@@ -231,15 +235,18 @@ header {
     border-color: var(--default-cell-border-color);
     color: var(--default-cell-text-color);
   }
+
   50% {
     background-color: var(--default-cell-bg-color);
     border-color: var(--default-cell-border-color);
     color: var(--default-cell-text-color);
   }
+
   50.1% {
     background-color: var(--absent-cell-bg-color);
     border-color: var(--absent-cell-bg-color);
   }
+
   100% {
     transform: rotateX(180deg);
   }
@@ -252,15 +259,18 @@ header {
     border-color: var(--default-cell-border-color);
     color: var(--default-cell-text-color);
   }
+
   50% {
     background-color: var(--default-cell-bg-color);
     border-color: var(--default-cell-border-color);
     color: var(--default-cell-text-color);
   }
+
   50.1% {
     background-color: var(--correct-cell-bg-color);
     border-color: var(--correct-cell-bg-color);
   }
+
   100% {
     transform: rotateX(180deg);
   }
@@ -273,27 +283,45 @@ header {
     border-color: var(--default-cell-border-color);
     color: var(--default-cell-text-color);
   }
+
   50% {
     background-color: var(--default-cell-bg-color);
     border-color: var(--default-cell-border-color);
     color: var(--default-cell-text-color);
   }
+
   50.1% {
     background-color: var(--present-cell-bg-color);
     border-color: var(--present-cell-bg-color);
   }
+
   100% {
     transform: rotateX(180deg);
   }
 }
+
 /* Additional animation on the child div to avoid letters turning upside down/snapping back to upright visual glitch */
 @keyframes offsetLetterFlip {
   0% {
     transform: rotateX(0deg);
   }
+
   100% {
     transform: rotateX(180deg);
   }
+}
+
+.guess-name-alert {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+}
+
+.refresh-button {
+  margin-top: .1rem;
+  padding: .5em;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 640px) {
@@ -303,6 +331,7 @@ header {
 
   .alert {
     padding: 0;
+    margin: 0;
   }
 
   .square {
@@ -312,7 +341,7 @@ header {
   }
 
   .key-btn {
-    height: 45px;
+    height: 47px;
     width: 45px;
   }
 
@@ -326,6 +355,7 @@ header {
   }
 
   .keyboard-container {
-    margin-top: 10px;
+    /* margin-top: 5px; */
   }
+
 }

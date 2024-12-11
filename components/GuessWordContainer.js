@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Grid from "./Grid";
 import Keyboard from "./Keyboard";
 import { MAX_WORD_LENGTH, MAX_TRIES } from "../constants/settings";
-import { answer, isWinningWord, isWordInList } from "../lib/words";
+import { getGameWord, isWordInList } from "../lib/words";
 import Alert from "./Alert";
 
 let triesLeft = MAX_TRIES;
@@ -19,20 +19,25 @@ const GuessWordContainer = () => {
     const [rowStyleClass, setRowStyleClass] = useState("");
     const [alertMessage, setAlertMessage] = useState("");
     const [rerender, setRerender] = useState(false);
+    const [answer, setAnswer] = useState(getGameWord().answer);
 
     let currentRowIdx = isGameOver
         ? MAX_TRIES - triesLeft - 1
         : MAX_TRIES - triesLeft;
     let currentSquareIdx = currentGuess.length - 1;
 
-    const squares = [];
-    for (let i = 0;i < MAX_TRIES;i++) {
-        squares.push([]);
-        for (let x = 0;x < MAX_WORD_LENGTH;x++) {
-            squares[i].push({ color: "", value: "" });
+    const getNewSquares = () => {
+        const squares = [];
+        for (let i = 0;i < MAX_TRIES;i++) {
+            squares.push([]);
+            for (let x = 0;x < MAX_WORD_LENGTH;x++) {
+                squares[i].push({ color: "", value: "" });
+            }
         }
+        return squares;
     }
-    const [guessList, setGuessList] = useState(squares);
+
+    const [guessList, setGuessList] = useState(getNewSquares());
 
     const changeGuess = (text) => {
         const currentRowIdx = MAX_TRIES - triesLeft;
@@ -62,6 +67,30 @@ const GuessWordContainer = () => {
         const newText = currentGuess.slice(0, currentGuess.length - 1);
         setCurrentGuess(newText);
     };
+
+    const onRefresh = () => {
+        setCurrentGuess("");
+        setGameOver(false);
+        setLetterStatus({
+            usedLetters: [],
+            misplacedLetters: [],
+            correctLetters: [],
+        });
+
+        usedLetters = [];
+        misplacedLetters = [];
+        correctLetters = [];
+
+        setRowStyleClass("");
+        setAlertMessage("");
+        setRerender(false);
+
+        triesLeft = MAX_TRIES;
+        currentRowIdx = 0;
+        currentSquareIdx = 0;
+        setGuessList(getNewSquares());
+        setAnswer(getGameWord().answer);
+    }
 
     const onEnter = () => {
         let ansCopy = answer; // to check for duplicates letters
@@ -111,7 +140,7 @@ const GuessWordContainer = () => {
             //
             triesLeft--;
             setCurrentGuess("");
-            if (isWinningWord(currentGuess)) {
+            if (currentGuess == answer) {
                 setGameOver(true);
                 setRowStyleClass("dancing-up");
                 setAlertMessage("You win !!!");
@@ -174,7 +203,7 @@ const GuessWordContainer = () => {
 
     return (
         <div>
-            <Alert alertMessage={alertMessage} />
+            <Alert alertMessage={alertMessage} refresh={onRefresh}/>
             <div id="game">
                 <Grid
                     guessList={guessList}
