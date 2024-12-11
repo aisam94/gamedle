@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import Grid from "./Grid";
 import Keyboard from "./Keyboard";
 import { MAX_WORD_LENGTH, MAX_TRIES } from "../constants/settings";
 import { answer, isWinningWord, isWordInList } from "../lib/words";
 import Alert from "./Alert";
-import useTheme from "../styles/theme";
 
 let triesLeft = MAX_TRIES;
 
@@ -115,20 +114,20 @@ const GuessWordContainer = () => {
             if (isWinningWord(currentGuess)) {
                 setGameOver(true);
                 setRowStyleClass("dancing-up");
-                setAlertMessage("YOU WIN !!!");
+                setAlertMessage("You win !!!");
                 return;
             }
             if (!triesLeft) {
                 setGameOver(true);
-                setAlertMessage(`YOU LOSE, GOOD DAY SIR !THE WORD IS ${answer}`);
+                setAlertMessage(`You lose, good day sir! The word is ${answer}`);
                 return;
             }
-            setAlertMessage("TRY AGAIN ...");
+            setAlertMessage("Try again...");
         } else if (currentGuess.length < MAX_WORD_LENGTH) {
             setRowStyleClass("shake-x");
-            setAlertMessage("NOT ENOUGH LETTERS");
+            setAlertMessage("Not enough letters");
         } else if (!isWordInList(currentGuess)) {
-            setAlertMessage("WORD IS NOT IN OUR LIST");
+            setAlertMessage("Word is not in our list");
             setRowStyleClass("shake-x");
         }
     };
